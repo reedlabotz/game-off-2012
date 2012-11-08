@@ -1,0 +1,5 @@
+name:  dartgame
+description:  A game written in dart
+
+#dependencies:
+#  unittest: { sdk: unittest }
