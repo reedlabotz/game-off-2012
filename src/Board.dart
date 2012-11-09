@@ -15,23 +15,33 @@ class Board {
   }
   
   Element draw(){
+    // Hex math http://mvdwege.wordpress.com/2011/07/07/math-for-fun/
+    var a = SMALL_TILE_HEIGHT/2;
+    var b = a/2;
+    var c = a*sqrt(3)/2;
+    var height = SMALL_TILE_HEIGHT;
+    var width = 2*c;
+    var points = "0,${b} ${c},0 ${2*c},${b} ${2*c},${b+a} ${c},${2*b+a} 0,${b+a}";
+    var spacing = SMALL_TILE_SPACING;
+    
+    
     Element holder = new DivElement();
     holder.classes.add('board');
     var num=0;
-    for(var x=0;x<TILE_ROWS.length;x++){
-      for(var y=0;y<TILE_ROWS[x];y++){
+    for(var row=0;row<TILE_ROWS.length;row++){
+      for(var col=0;col<TILE_ROWS[row];col++){
         Element tile = new DivElement();
         Element svg = new SVGElement.svg("""
-<svg width="40px" height="36px" viewBox="0 0 40 36"
-       xmlns="http://www.w3.org/2000/svg" version="1.1">
-    <polygon style="fill:${TILE_COLORS[tiles[num]]}"
-             points="10,0 30,0 40,18 30,36 10,36 0,18" />
+<svg width="${width}px" height="${height}px" viewBox="0 0 $width $height" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <polygon style="fill:${TILE_COLORS[tiles[num]]}" points="$points" />
 </svg>
 """);
         tile.nodes.add(svg);
         tile.classes.add("tile");
-        tile.style.top = "${TILE_ROW_OFFSETS[x]+y*36+1*y}px";
-        tile.style.left = "${x*30+1*x}px";
+        tile.style.width = "${width}px";
+        tile.style.height = "${height}px";
+        tile.style.top = "${row*(3*b+spacing)}px";
+        tile.style.left = "${TILE_ROW_OFFSETS[row]*(c+spacing/2)+(width+spacing)*col}px";
         
         holder.nodes.add(tile);
         num++;

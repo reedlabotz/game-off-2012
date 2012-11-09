@@ -12,7 +12,5 @@ body {
 .tile{
   margin: 0;
   padding: 0;
-  height: 36px;
-  width:40px;
   position: absolute;
 }
