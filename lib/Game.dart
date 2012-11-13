@@ -24,16 +24,19 @@ class Game {
     }
   }
   
-  Game.fromJson(Map data){
-    master = new Board.fromJson(data['master'],players);
-    forks = new List<Board>();
-    for(var d in data['forks']){
-      forks.add(new Board.fromJson(d,players));
-    }
+  Game.fromMap(Map data){
+    // we must do the players first, because they are needed for boards
     players = new List<Player>();
     for(var d in data['players']){
-      players.add(new Player.fromJson(d));
+      players.add(new Player.fromMap(d));
     }
+    
+    master = new Board.fromMap(data['master'],players);
+    forks = new List<Board>();
+    for(var d in data['forks']){
+      forks.add(new Board.fromMap(d,players));
+    }
+    
     round = data['round'];
     roll = data['roll'];
     id = data['id'];
@@ -53,5 +56,20 @@ class Game {
   
   Map toJson(){
     return toMap();
+  }
+  
+  
+  String addPlayer(Player player){
+    if(players.length == MAX_GAME_PLAYERS){
+      return "Game is full";
+    }
+    for(var p in players){
+      if(p.color == player.color){
+        return "That color is taken";
+      }
+    }
+    
+    players.add(player);
+    return null;
   }
 }

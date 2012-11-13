@@ -9,7 +9,7 @@ class Board {
     id = new Uuid().v4();
   }
   
-  Board.fromJson(Map data,this.players){
+  Board.fromMap(Map data,this.players){
     id = data['id'];
     owner = null;
     for(var p in players){

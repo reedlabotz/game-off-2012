@@ -55,22 +55,60 @@ class GameServer {
       var color = int.parse(dataMap['color']);
       var game = new Game();
       var player = new Player(color);
-      game.players.add(player);
+      game.addPlayer(player);
       _games.insert(game.toJson());
       
-      res.outputStream.writeString(JSON.stringify(game));
+      res.outputStream.writeString(JSON.stringify({
+        "game_id":game.id,
+        "player_id":player.id
+      }));
       res.outputStream.close();
     };
   }
 
   void _joinGame(HttpRequest req, HttpResponse res){
-    res.outputStream.writeString("join game");
-    res.outputStream.close();
+    var game_id = new RegExp("^/api/game/($UUID_REGEX)/player/join\$").firstMatch(req.path).group(1);
+    var result = _games.findOne({'id':game_id});
+    result.then((Map data){
+      var game = new Game.fromMap(data);
+      
+      var dataMap = {};
+      var dataStream = new List<int>();
+      req.inputStream.onData = () {
+        dataStream.addAll(req.inputStream.read());
+        String dataString = new String.fromCharCodes(dataStream);
+        dataMap = JSON.parse(dataString);
+        
+        if(!dataMap.containsKey('color')){
+          return _sendBadRequest(res);
+        }
+        var color = int.parse(dataMap['color']);
+        var player = new Player(color);
+        var error = game.addPlayer(player);
+        _games.update({'id':game_id}, game.toMap());
+        if(error != null){
+          res.outputStream.writeString(JSON.stringify({
+            'Error': error
+          }));
+          res.outputStream.close();
+        }else{
+          res.outputStream.writeString(JSON.stringify({
+            "player_id": player.id
+          }));
+          res.outputStream.close();
+        }
+      };
+    });
   }
 
   void _gameInfo(HttpRequest req, HttpResponse res){
-    res.outputStream.writeString("game info");
-    res.outputStream.close();
+    var game_id = new RegExp("^/api/game/($UUID_REGEX)\$").firstMatch(req.path).group(1);
+    var result = _games.findOne({'id':game_id});
+    result.then((Map data){
+      var game = new Game.fromMap(data);
+      res.outputStream.writeString(JSON.stringify(game));
+      res.outputStream.close();
+    });
   }
 
   void _gameMove(HttpRequest req, HttpResponse res){

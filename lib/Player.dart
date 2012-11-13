@@ -8,7 +8,7 @@ class Player {
     id = new Uuid().v4();
   }
   
-  Player.fromJson(Map data){
+  Player.fromMap(Map data){
     id = data['id'];
     color = data['color'];
   }

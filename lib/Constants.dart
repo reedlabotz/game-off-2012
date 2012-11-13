@@ -6,3 +6,5 @@ const TILE_COLORS = const ['#9bb8df','#d69bdf','#f05e68','#fcbc58','#f8f790','#c
 const SMALL_TILE_SPACING = 1;
 const SMALL_TILE_HEIGHT = 40;
 
+const MAX_GAME_PLAYERS = 4;
+
