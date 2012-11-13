@@ -7,8 +7,8 @@ API
 Returns
 ```json
 {
-	'game_id':'9583db89-3242-4b8f-a240-074046c9cc85',
-	'player_id':'3bbce1ec-5996-4051-a319-2c99d76812bf'
+	"game_id":"9583db89-3242-4b8f-a240-074046c9cc85",
+	"player_id":"3bbce1ec-5996-4051-a319-2c99d76812bf"
 }
 ```
 
@@ -17,6 +17,15 @@ Returns
 Returns
 ```json
 {
+	"master":{
+		"id":"6917ba1b-29ad-4f27-8751-76f60c6ae020",
+		"owner":null
+	},
+	"forks":[],
+	"players":[],
+	"round":0,
+	"roll":null,
+	"id":"75412dfa-a735-4377-90cd-2675ddbd53b0"
 }
 ```
 
@@ -24,8 +33,8 @@ Returns
 Returns
 ```json
 {
-	'game_id':'9583db89-3242-4b8f-a240-074046c9cc85',
-	'player_id':'3bbce1ec-5996-4051-a319-2c99d76812bf'
+	"game_id":"9583db89-3242-4b8f-a240-074046c9cc85",
+	"player_id":"3bbce1ec-5996-4051-a319-2c99d76812bf"
 }
 ```
 
@@ -33,5 +42,7 @@ Returns
 ### PUT `/api/game/:game_id/player/:player_id/move` - make a move
 Returns
 ```json
-{'success':true} 
+{
+	"success":true
+} 
 ```
