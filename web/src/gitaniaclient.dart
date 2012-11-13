@@ -1,9 +1,10 @@
-library gameclient;
+library gitoniaclient;
 
 import '../../lib/gamelib.dart';
 
 import 'dart:html';
 import 'dart:math';
+import 'dart:json';
 
 part 'App.dart';
 

@@ -1,4 +1,4 @@
-library gameserver;
+library gitoniaserver;
 
 import "dart:io";
 import "dart:core";

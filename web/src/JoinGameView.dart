@@ -1,4 +1,4 @@
-part of gameclient;
+part of gitoniaclient;
 
 
 class JoinGameView {
@@ -28,7 +28,7 @@ class JoinGameView {
         <div class="control-group">
           <label class="control-label" for="name">Name</label>
           <div class="controls">
-            <input type="text" id="name" placeholder="Name">
+            <input type="text" id="name" placeholder="">
           </div>
         </div>
         <div class="control-group">
@@ -38,7 +38,7 @@ class JoinGameView {
     """);
     for(var i=0;i<PLAYER_COLORS.length;i++){
       html.add("""
-    <input type="radio" name="color" id="player-color-$i" value="$i">
+    <input type="radio" name="color" class="color-choice" id="player-color-$i" value="$i">
     <label class="radio player-select-color" for="player-color-$i" style="background:${PLAYER_COLORS[i]};"></label>
       """);
     }
@@ -56,7 +56,15 @@ class JoinGameView {
     var element = new Element.html(html.toString());
     element.query("#join-game").on.submit.add((e){
       e.preventDefault();
-      print("form submitted");
+      FormElement form = element.query("#join-game");
+      var name = form.query("#name").value;
+      var selectedColor = form.query(".color-choice:checked");
+      if(selectedColor == null || name==""){
+        
+      }else{
+        var color = selectedColor.value;
+        print({'name':name,'color':color});
+      }
     });
     allHold.elements.add(element);
     return allHold;

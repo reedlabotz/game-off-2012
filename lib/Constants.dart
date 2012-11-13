@@ -1,4 +1,4 @@
-part of gamelib;
+part of gitonialib;
 
 const TILE_ROWS = const [3,4,5,4,3];
 const TILE_ROW_OFFSETS = const [2,1,0,1,2];

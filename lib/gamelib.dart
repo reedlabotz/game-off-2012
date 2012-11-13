@@ -1,4 +1,4 @@
-library gamelib;
+library gitonialib;
 
 import 'dart:math';
 import 'dart:json';

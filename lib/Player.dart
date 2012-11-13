@@ -1,4 +1,4 @@
-part of gamelib;
+part of gitonialib;
 
 class Player {
   String id;

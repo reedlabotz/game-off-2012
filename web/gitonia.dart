@@ -1,4 +1,4 @@
-import 'src/gameclient.dart';
+import 'src/gitaniaclient.dart';
 
 void main() {
   var app = new App();

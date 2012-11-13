@@ -1,4 +1,4 @@
-part of gameclient;
+part of gitoniaclient;
 
 class GameView {
   Game _game;
