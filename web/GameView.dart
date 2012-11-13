@@ -1,20 +1,11 @@
-part of gamelib;
+part of gameclient;
 
-class Board {
-  List<int> tiles;
-  List<Player> players;
-  Player owner;
-  String id;
+class GameView {
+  Game _game;
   
-  Board(){
-    tiles = new List<int>();
-    var rand = new Random();
-    for(var i=0;i<19;i++){
-      tiles.add(rand.nextInt(6));
-    }
-  }
+  GameView(this._game);
   
-  Element draw(){
+  Element drawBoard(Board board){
     // Hex math http://mvdwege.wordpress.com/2011/07/07/math-for-fun/
     var a = SMALL_TILE_HEIGHT/2;
     var b = a/2;
@@ -33,7 +24,7 @@ class Board {
         Element tile = new DivElement();
         Element svg = new SVGElement.svg("""
 <svg width="${width}px" height="${height}px" viewBox="0 0 $width $height" xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <polygon style="fill:${TILE_COLORS[tiles[num]]}" points="$points" />
+  <polygon style="fill:${TILE_COLORS[_game.tiles[num]]}" points="$points" />
 </svg>
 """);
         tile.nodes.add(svg);

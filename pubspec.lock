@@ -1,1 +1,1 @@
-{"packages":{}}
+{"packages":{"mongo_dart":{"version":"0.0.4","source":"hosted","description":"mongo_dart"},"uuid":{"version":"0.0.8","source":"git","description":{"url":"https://github.com/reedlabotz/dart-uuid","ref":null,"resolved-ref":"d054caad6197217a16d39f2c689f2c024ef5c8f1"}},"log4dart":{"version":"1.0.0","source":"hosted","description":"log4dart"},"unittest":{"version":"0.0.0-r.14669","source":"sdk","description":"unittest"},"args":{"version":"0.0.0-r.14669","source":"sdk","description":"args"}}}
