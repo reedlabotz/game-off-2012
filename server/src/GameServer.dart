@@ -6,7 +6,7 @@ import "dart:json";
 import "package:uuid/uuid.dart";
 import 'package:mongo_dart/mongo_dart.dart';
 
-import '../lib/gamelib.dart';
+import '../../lib/gamelib.dart';
 
 const UUID_REGEX = "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}";
 

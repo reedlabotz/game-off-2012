@@ -13,3 +13,7 @@ const STATUS_WAITING_FOR_PLAYERS = 1;
 const STATUS_PLAYING = 2;
 
 const MOVE_TYPE_START_GAME = 1;
+
+const PLAYER_COLORS = const ['#230b9e','#269e0b','#e6e422','#ff000f'];
+
+const LARGE_LOGO_HEIGHT = 150;
