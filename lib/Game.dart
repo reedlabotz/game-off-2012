@@ -40,14 +40,18 @@ class Game {
     tiles = data['tiles'];
   }
   
-  Map toJson(){
+  Map toMap(){
     return {
-      'master':master,
-      'forks': forks,
-      'players': players,
+      'master': master.toMap(),
+      'forks': forks.map((fork) => fork.toMap()),
+      'players': players.map((player) => player.toMap()),
       'round': round,
       'roll': roll,
       'id': id
     };
+  }
+  
+  Map toJson(){
+    return toMap();
   }
 }

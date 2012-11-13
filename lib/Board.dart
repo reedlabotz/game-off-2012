@@ -19,10 +19,14 @@ class Board {
     }
   }
   
-  Map toJson(){
+  Map toMap(){
     return {
       'id': id,
       'owner': owner!=null?owner.id:null
     };
+  }
+  
+  Map toJson(){
+    return toMap();
   }
 }

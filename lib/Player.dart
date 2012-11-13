@@ -13,10 +13,14 @@ class Player {
     color = data['color'];
   }
   
-  Map toJson(){
+  Map toMap(){
     return {
       'id': id,
       'color': color
     };
+  }
+  
+  Map toJson(){
+    return toMap();
   }
 }
