@@ -49,12 +49,13 @@ class GameServer {
       String dataString = new String.fromCharCodes(data);
       dataMap = JSON.parse(dataString);
       
-      if(!dataMap.containsKey('color')){
+      if(!dataMap.containsKey('color') || !dataMap.containsKey('name')){
         return _sendBadRequest(res);
       }
       var color = int.parse(dataMap['color']);
+      var name = dataMap['name'];
       var game = new Game();
-      var player = new Player(color);
+      var player = new Player(color,name);
       game.addPlayer(player);
       _games.insert(game.toJson());
       
@@ -79,24 +80,26 @@ class GameServer {
         String dataString = new String.fromCharCodes(dataStream);
         dataMap = JSON.parse(dataString);
         
-        if(!dataMap.containsKey('color')){
+        if(!dataMap.containsKey('color') || !dataMap.containsKey('name')){
           return _sendBadRequest(res);
         }
         var color = int.parse(dataMap['color']);
-        var player = new Player(color);
+        var name = dataMap['name'];
+        var player = new Player(color,name);
         var error = game.addPlayer(player);
-        _games.update({'id':game_id}, game.toMap());
         if(error != null){
           res.outputStream.writeString(JSON.stringify({
             'Error': error
           }));
           res.outputStream.close();
-        }else{
-          res.outputStream.writeString(JSON.stringify({
-            "player_id": player.id
-          }));
-          res.outputStream.close();
+          return;
         }
+        _games.update({'id':game_id}, game.toMap());
+        res.outputStream.writeString(JSON.stringify({
+          "player_id": player.id
+        }));
+        res.outputStream.close();
+
       };
     });
   }
@@ -112,8 +115,41 @@ class GameServer {
   }
 
   void _gameMove(HttpRequest req, HttpResponse res){
-    res.outputStream.writeString("game move");
-    res.outputStream.close();
+    var matches = new RegExp("^/api/game/($UUID_REGEX)/player/($UUID_REGEX)/move\$").firstMatch(req.path);
+    var game_id = matches.group(1);
+    var player_id = matches.group(2);
+    var result = _games.findOne({'id':game_id});
+    result.then((Map data){
+      var game = new Game.fromMap(data);
+      if(game.getCurrentPlayer().id != player_id){
+        res.outputStream.writeString(JSON.stringify({
+          'Error': "It's not your turn"
+        }));
+        res.outputStream.close();
+        return;
+      }
+      
+      var dataMap = {};
+      var dataStream = new List<int>();
+      req.inputStream.onData = () {
+        dataStream.addAll(req.inputStream.read());
+        String dataString = new String.fromCharCodes(dataStream);
+        dataMap = JSON.parse(dataString);
+        var error = game.makeMove(dataMap);
+        if(error != null){
+          res.outputStream.writeString(JSON.stringify({
+            'Error': error
+          }));
+          res.outputStream.close();
+          return;
+        }
+        _games.update({'id':game_id}, game.toMap());
+        res.outputStream.writeString(JSON.stringify({
+          'Success': true
+        }));
+        res.outputStream.close();
+      };
+    });
   }
   
   
