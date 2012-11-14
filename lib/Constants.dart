@@ -1,5 +1,7 @@
 part of gitonialib;
 
+const UUID_REGEX = "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}";
+
 const TILE_ROWS = const [3,4,5,4,3];
 const TILE_ROW_OFFSETS = const [2,1,0,1,2];
 const TILE_COLORS = const ['#9bb8df','#d69bdf','#f05e68','#fcbc58','#f8f790','#c4df9b'];
@@ -17,3 +19,5 @@ const MOVE_TYPE_START_GAME = 1;
 const PLAYER_COLORS = const ['#230b9e','#269e0b','#e6e422','#ff000f'];
 
 const LARGE_LOGO_HEIGHT = 150;
+
+const API_URL = "http://localhost:7000/api";

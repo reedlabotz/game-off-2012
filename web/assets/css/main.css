@@ -2,7 +2,7 @@ body {
   background: url('../img/black_denim.png');
   margin: 0;
   padding: 0;
-  font-family: 'Source Code Pro', sans-serif;
+  font-family: 'Source Code Pro', sans-serif !important;
 }
 
 .join-game-top{
@@ -23,11 +23,16 @@ body {
 
 .title-holder{
   font-size: 48px;
+  line-height: 54px;
   float: left;
   padding-left: 20px;
-  padding-top: 48px;
+  padding-top: 36px;
 }
 
+.subtitle-holder{
+  font-size: 18px;
+  line-height: 24px;
+}
 
 .board{
   position: relative;

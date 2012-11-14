@@ -1,11 +1,18 @@
 part of gitoniaclient;
 
 class GameView {
+  App _app;
   Game _game;
   
-  GameView(this._game);
+  GameView(this._app,this._game){
+    
+  }
   
-  Element drawBoard(Board board){
+  Element draw(){
+    return new Element.html("<h1>Game</h1>");
+  }
+  
+  Element _drawBoard(Board board){
     // Hex math http://mvdwege.wordpress.com/2011/07/07/math-for-fun/
     var a = SMALL_TILE_HEIGHT/2;
     var b = a/2;

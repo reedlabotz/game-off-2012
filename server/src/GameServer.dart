@@ -8,8 +8,6 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 import '../../lib/gamelib.dart';
 
-const UUID_REGEX = "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}";
-
 class GameServer {
   DbCollection _games;
   HttpServer _server;
@@ -26,10 +24,21 @@ class GameServer {
     _server.addRequestHandler((req) => req.method == "POST" && new RegExp("^/api/game/$UUID_REGEX/player/join\$").hasMatch(req.path), _joinGame);
     _server.addRequestHandler((req) => req.method == "PUT" && new RegExp("^/api/game/$UUID_REGEX/player/$UUID_REGEX/move\$").hasMatch(req.path), _gameMove);
     _server.addRequestHandler((req) => new RegExp("^/api/game/$UUID_REGEX\$").hasMatch(req.path), _gameInfo);
-
+    
+    _server.addRequestHandler((req) => req.method == "OPTIONS", (HttpRequest req, HttpResponse res){
+      _addCrossDomainHeaders(res);
+      res.outputStream.writeString("");
+      res.outputStream.close();
+    });
+  }
+  
+  void _addCrossDomainHeaders(HttpResponse res){
+    res.headers.add('Access-Control-Allow-Origin', '*');
+    res.headers.add('Access-Control-Allow-Headers','Content-type');
   }
   
   void _send404(HttpResponse response){
+    _addCrossDomainHeaders(response);
     response.statusCode = HttpStatus.NOT_FOUND;
     response.outputStream.writeString(JSON.stringify({'Error':'404'}));
     response.outputStream.close();
@@ -42,6 +51,8 @@ class GameServer {
   }
 
   void _createGame(HttpRequest req, HttpResponse res){
+    _addCrossDomainHeaders(res);
+    
     var dataMap = {};
     var data = new List<int>();
     req.inputStream.onData = () {
@@ -68,6 +79,8 @@ class GameServer {
   }
 
   void _joinGame(HttpRequest req, HttpResponse res){
+    _addCrossDomainHeaders(res);
+    
     var game_id = new RegExp("^/api/game/($UUID_REGEX)/player/join\$").firstMatch(req.path).group(1);
     var result = _games.findOne({'id':game_id});
     result.then((Map data){
@@ -105,6 +118,8 @@ class GameServer {
   }
 
   void _gameInfo(HttpRequest req, HttpResponse res){
+    _addCrossDomainHeaders(res);
+    
     var game_id = new RegExp("^/api/game/($UUID_REGEX)\$").firstMatch(req.path).group(1);
     var result = _games.findOne({'id':game_id});
     result.then((Map data){
@@ -115,6 +130,8 @@ class GameServer {
   }
 
   void _gameMove(HttpRequest req, HttpResponse res){
+    _addCrossDomainHeaders(res);
+    
     var matches = new RegExp("^/api/game/($UUID_REGEX)/player/($UUID_REGEX)/move\$").firstMatch(req.path);
     var game_id = matches.group(1);
     var player_id = matches.group(2);
@@ -151,7 +168,4 @@ class GameServer {
       };
     });
   }
-  
-  
-  
 }

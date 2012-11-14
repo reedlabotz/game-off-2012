@@ -5,11 +5,13 @@ import '../../lib/gamelib.dart';
 import 'dart:html';
 import 'dart:math';
 import 'dart:json';
+import 'dart:core';
 
 part 'App.dart';
 
-part 'BoardView.dart';
-part 'JoinGameView.dart';
+part 'GitoniaService.dart';
+
 part 'GameView.dart';
 part 'LogoView.dart';
 part 'MainView.dart';
+part 'JoinGameView.dart';

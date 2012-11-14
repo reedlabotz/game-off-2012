@@ -3,7 +3,7 @@ Game Server
 
 API
 ---
-### `GET /api/game/create` - Create a new game and join it
+### `POST /api/game/create` - Create a new game and join it
 Returns
 ```json
 {
