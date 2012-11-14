@@ -41,7 +41,7 @@ class App {
     List games = loadGames();
     for(var g in games){
       if(g['game_id'] == gameId){
-        return g['player_id'];;
+        return g['player_id'];
       }
     }
     return null;
